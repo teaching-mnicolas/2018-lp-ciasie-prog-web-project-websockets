@@ -25,19 +25,13 @@ io.on('connection', function(socket){
 
 
 /* Configuration expressJS */
-app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
-  app.use(express.favicon());
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
-});
+app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/views');
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req, res){
-	res.sendfile('views/chat.html');
+	res.sendFile(__dirname + '/views/chat.html');
 });
 
 server.listen(app.get('port'), function(){
