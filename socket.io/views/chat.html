@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Socket.io</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1 style="text-align: center">SOCKET.IO</h1>
+        <div id="content"></div>
+        <input type="text" id="input"/>
+
+
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>
+            $(function () {
+                var name   = prompt('Votre nom :');
+                var socket = io();
+
+                socket.on('messages', function(messages){
+                    messages.forEach(function(msg){
+                        $('#content').append(msg);
+                    });
+                });
+                
+                socket.on('message', function(msg){
+                    $('#content').append(msg);
+                });
+
+                $('#input').focus();
+                $('#input').keydown(function(e) {
+                    if (e.keyCode === 13) {
+                        var msg = $(this).val();
+                        if(msg){
+                            socket.emit('message',{author:name, data:msg});
+                            $(this).val('');
+                            $('#input').focus();
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
